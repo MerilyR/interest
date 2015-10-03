@@ -4,4 +4,11 @@
   <artifactId>interest</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>SolvedInterest</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.rabbitmq</groupId>
+  		<artifactId>amqp-client</artifactId>
+  		<version>3.5.5</version>
+  	</dependency>
+  </dependencies>
 </project>
