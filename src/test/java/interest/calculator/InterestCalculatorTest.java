@@ -1,6 +1,8 @@
 package interest.calculator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import interest.exception.ExceptionHandler;
 
 import java.math.BigDecimal;
 
@@ -17,14 +19,14 @@ public class InterestCalculatorTest extends InterestCalculator {
 		System.out.println("Double values are not exact:");
 		System.out.println("double != BigDecimal");
 		System.out.println(d + " != " + bd);
-		assertNotEquals(Double.toString(d), bd.toString());
+		assertTrue(Double.toString(d).compareTo(bd.toString())!=0);
 		
 		d = 0.1d + 0.1d + 0.1d + 0.1d + 0.1d + 0.1d + 0.1d + 0.1d + 0.1d + 0.1d;
 		bd = new BigDecimal(d);
 		System.out.println("Adding double values is not exact:");
 		System.out.println("result of adding 0.1d ten times:");
 		System.out.println(d + " != " + bd);
-		assertNotEquals(Double.toString(d), bd.toString());
+		assertTrue(Double.toString(d).compareTo(bd.toString())!=0);
 		
 		System.out.println(1 + " != " + d);
 		assertTrue (Double.compare(1, d) == 1);	//bigger
@@ -49,7 +51,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 		}
 		catch (IllegalArgumentException e) {
 
-			printException(e);
+			ExceptionHandler.handle(e);
 			assert true;
 		}
 		
@@ -58,7 +60,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 		}
 		catch (IllegalArgumentException e) {
 
-			printException(e);
+			ExceptionHandler.handle(e);
 			assert true;
 		}
 		
@@ -86,7 +88,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			getPercentageForDayNr(0);
 		}
 		catch (IllegalArgumentException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 			assert true;
 		}
 		
@@ -126,15 +128,31 @@ public class InterestCalculatorTest extends InterestCalculator {
 		assertTrue(Double.compare(getInterest(343, 25), 240.10)==0);
 		assertTrue(Double.compare(getInterest(465, 22), 292.95)==0);
 		
-		assertTrue(Double.compare(getInterest(465, 0), 0)==0);
-				
+		try {
+			getInterest(0, 5);
+			assert false;
+		}
+		catch (IllegalArgumentException e) {
+			ExceptionHandler.handle(e);
+			assert true;
+		}		
+		
+		try {
+			getInterest(123, 0);
+			assert false;
+		}
+		catch (IllegalArgumentException e) {
+			ExceptionHandler.handle(e);
+			assert true;
+		}
+		
 		//trying with negative values
 		try {
 			getInterest(123, -1);
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 			assert true;
 		}
 		
@@ -143,7 +161,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 			assert true;
 		}
 		
@@ -152,7 +170,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 			assert true;
 		}
 		
@@ -185,13 +203,5 @@ public class InterestCalculatorTest extends InterestCalculator {
 		System.out.println("--- End of Test ---");
 		System.out.println("");
 		
-	}
-	
-	private void printException(Exception e) {
-		System.out.println("--- Exception caught --- ");
-		System.out.println(e.getClass());
-		System.out.println(e.getStackTrace()[0]);
-		System.out.println(e.getMessage());
-	}
-	
+	}	
 }

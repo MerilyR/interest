@@ -2,6 +2,7 @@ package interest.main;
 
 import interest.handler.MessageHandler;
 import interest.server.ServerChannel;
+import interest.service.MessagePublisher;
 import interest.service.Subscriber;
 
 public class InterestCalculatorMain{
@@ -11,9 +12,19 @@ public class InterestCalculatorMain{
 		ServerChannel sChannel = createChannel();	
 		sChannel.createChannel();
 		Subscriber subscriber = createSubscriber(sChannel);
-		subscriber.addListener(new MessageHandler());
+		MessageHandler msgHandler = createMessageHandler();
+		subscriber.addListener(msgHandler);
 		subscriber.startService();
 		
+	}
+
+	private static MessageHandler createMessageHandler() {
+		MessageHandler msgHandler = new MessageHandler();
+		
+		msgHandler.setPublisher(new MessagePublisher());
+		msgHandler.setToken("themerru");
+		
+		return msgHandler;
 	}
 
 	private static Subscriber createSubscriber(ServerChannel sChannel) {

@@ -1,5 +1,7 @@
 package interest.server;
 
+import interest.exception.ExceptionHandler;
+
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -32,14 +34,14 @@ public class ServerChannel {
 		try {
 			connection = factory.newConnection();
 			channel = connection.createChannel();
-			System.out.println("---Connection channel created---");
+			System.out.println("~Channel> ---Connection channel created---");
 			return true;
 			
 		} catch (IOException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 			return false;
 		} catch (TimeoutException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 			return false;
 		}
 	}
@@ -56,7 +58,7 @@ public class ServerChannel {
 		try {			
 			consumerTag = getChannel().basicConsume(queue, true, consumer);
 		} catch (IOException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 		}
 	}
 
@@ -65,17 +67,8 @@ public class ServerChannel {
 			getChannel().basicCancel(consumerTag);
 			consumerTag = null;
 		} catch (IOException e) {
-			printException(e);
+			ExceptionHandler.handle(e);
 		}
-	}
-	
-	
-	private void printException(Exception e) {
-		System.out.println("--- Exception caught --- ");
-		System.out.println(e.getClass());
-		System.out.println(e.getMessage());
-		System.out.println(e.getStackTrace()[0]);
-		//e.printStackTrace();
 	}
 	
 }

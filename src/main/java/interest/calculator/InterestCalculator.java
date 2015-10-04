@@ -20,19 +20,19 @@ public class InterestCalculator {
 	 */
 	public static double getInterest( double sum, int days ) {
 
-		if (days < 0)
-			throw new IllegalArgumentException ("Number of days cannot be negative!");
+		if (days < 1)
+			throw new IllegalArgumentException ("%Calculator> Number of days cannot be less than 1!");
 		
 		BigDecimal interest = new BigDecimal("0");
 		for (int day = 1; day <= days; day ++) {	
 			interest = interest.add(new BigDecimal("" + getInterestForDayNr ( day, sum )));			
 		}
 		
-		System.out.println("Calculating interest:");
-		System.out.println("Amount = 		"+sum);
-		System.out.println("Number of days = 	"+days);
-		System.out.println("Total interest = 	"+interest);
-		System.out.println("---------------------------");
+		System.out.println("%Calculator> Calculating interest:");
+		System.out.println("%Calculator> Amount = 		"+sum);
+		System.out.println("%Calculator> Number of days = 	"+days);
+		System.out.println("%Calculator> Total interest = 	"+interest);
+		System.out.println("%Calculator> ---------------------------");
 		
 		return interest.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
@@ -43,7 +43,7 @@ public class InterestCalculator {
 	
 	protected static int getPercentageForDayNr ( int indexOfDay ) {	
 		if (indexOfDay < 1)
-			throw new IllegalArgumentException ("Index of day cannot be smaller than 1!");			
+			throw new IllegalArgumentException ("%Calculator> Index of day cannot be smaller than 1!");			
 		if ( indexOfDay %3 != 0 && indexOfDay %5 != 0 )
 			return 4;
 		else {
@@ -59,9 +59,9 @@ public class InterestCalculator {
 	protected static double getPartOfAmount ( double percentage, double amount ) {
 		
 		if (percentage < 0)
-			throw new IllegalArgumentException ("Percentage cannot be negative!");
-		if (amount < 0)
-			throw new IllegalArgumentException ("Amount cannot be negative!");
+			throw new IllegalArgumentException ("%Calculator> Percentage cannot be negative!");
+		if (amount <= 0)
+			throw new IllegalArgumentException ("%Calculator> Amount cannot be negative or 0!");
 		
 		double partOfAmount = percentage/100*amount;
 		BigDecimal bigDecimal = new BigDecimal (String.valueOf(partOfAmount));

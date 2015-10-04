@@ -1,10 +1,13 @@
 package interest.service;
 
+import interest.exception.ExceptionHandler;
 import interest.server.ServerChannel;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
@@ -55,27 +58,38 @@ public class Subscriber {
 			}
 		};
 		sChannel.subscribe(queue, consumer);
-		System.out.println("---Subscription started---");
-		System.out.println("---Subscribed to queue > " + queue);
-		System.out.println("---Receiving limited to " + messages + " messages --- ");
-		System.out.println(" [*] Waiting for messages: ");	
+		System.out.println("$Subscriber> ---Subscription started---");
+		System.out.println("$Subscriber> ---Subscribed to queue > " + queue);
+		System.out.println("$Subscriber> ---Receiving limited to " + messages + " messages--- ");
+		System.out.println("$Subscriber>  [*] Waiting for messages: ");	
 		
 	}
 	
 	protected void stopService() {
 	    sChannel.unsubscribe(queue);
-		System.out.println("---Unsubscribed from queue > " + queue);
+	    System.out.println();
+		System.out.println("$Subscriber>  Unsubscribed from queue > " + queue);
 	}
 
 	private void publish(String message) {
 		for (ServiceListener listener: listeners)
-			listener.getMessage(message);
+			try {
+				listener.getMessage(message);
+			} catch (Exception e) {
+				ExceptionHandler.handle(e);
+			}
 	}
 	
 	private void handleReceivedMessages (byte[] body)
 			throws UnsupportedEncodingException {
 		
 		String message = new String(body, "UTF-8");
+		Date date = new Date();
+		System.out.println();
+		System.out.println("$Subscriber> ---Receiving message---");
+		System.out.println("$Subscriber> Message received at " + new Timestamp(date.getTime()) + ":");
+		System.out.println("$Subscriber>  [x] Received '"+message+"'");
+		
 		publish(message);
 		messagesReceived ++;
 		
