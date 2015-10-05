@@ -1,0 +1,9 @@
+{
+"Server": "impact.ccat.eu",
+"User": "myjar",
+"Password": "myjar",
+"Messages": 10,
+"Token": "themerru©",
+"Input": "interest-queue",
+"Output": "solved-interest-queue"
+}

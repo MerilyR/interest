@@ -7,7 +7,7 @@ public class ExceptionHandler {
 		System.out.println("#ExceptionHandler> "+e.getClass());
 		System.out.println("#ExceptionHandler> "+e.getMessage());
 		System.out.println("#ExceptionHandler> "+e.getStackTrace()[0]);
-		//e.printStackTrace();
+//		e.printStackTrace();
 	}
 	
 }
