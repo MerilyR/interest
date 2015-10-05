@@ -2,8 +2,10 @@ package interest.main;
 
 import interest.handler.MessageHandler;
 import interest.server.ServerChannel;
-import interest.service.MessagePublisher;
+import interest.service.Publisher;
 import interest.service.Subscriber;
+import interest.service.impl.MessagePublisher;
+import interest.service.impl.MessageSubscriber;
 
 public class InterestCalculatorMain{
 
@@ -12,28 +14,37 @@ public class InterestCalculatorMain{
 		ServerChannel sChannel = createChannel();	
 		sChannel.createChannel();
 		Subscriber subscriber = createSubscriber(sChannel);
-		MessageHandler msgHandler = createMessageHandler();
+		Publisher publisher = createPublisher(sChannel);
+		MessageHandler msgHandler = createMessageHandler(publisher);
 		subscriber.addListener(msgHandler);
 		subscriber.startService();
 		
 	}
 
-	private static MessageHandler createMessageHandler() {
+	private static MessageHandler createMessageHandler(Publisher publisher) {
 		MessageHandler msgHandler = new MessageHandler();
+		msgHandler.setPublisher(publisher);
 		
-		msgHandler.setPublisher(new MessagePublisher());
 		msgHandler.setToken("themerru");
 		
 		return msgHandler;
 	}
 
 	private static Subscriber createSubscriber(ServerChannel sChannel) {
-		Subscriber s = new Subscriber (sChannel);
+		Subscriber s = new MessageSubscriber (sChannel);
 		
 		s.setQueue ("interest-queue");
-		s.setNrOfMessages(10);
+		s.setNrOfMessages(0);
 		
 		return s;
+	}
+	
+	private static Publisher createPublisher(ServerChannel sChannel) {
+		Publisher p = new MessagePublisher(sChannel);
+		
+		p.setQueue("solved-interest-queue");
+		
+		return p;
 	}
 
 	private static ServerChannel createChannel() {

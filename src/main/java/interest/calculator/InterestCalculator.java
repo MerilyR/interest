@@ -2,6 +2,7 @@ package interest.calculator;
 
 import java.math.BigDecimal;
 
+
 public class InterestCalculator {
 
 	
@@ -18,16 +19,18 @@ public class InterestCalculator {
 	 * 
 	 * Note: returns 0 when number of days is 0
 	 */
-	public static double getInterest( double sum, int days ) {
+	public static double getInterest( long sum, long days ) {
 
 		if (days < 1)
 			throw new IllegalArgumentException ("%Calculator> Number of days cannot be less than 1!");
 		
 		BigDecimal interest = new BigDecimal("0");
+		
 		for (int day = 1; day <= days; day ++) {	
-			interest = interest.add(new BigDecimal("" + getInterestForDayNr ( day, sum )));			
+			interest = interest.add(new BigDecimal("" + getInterestForDayNr ( day, sum )));
 		}
 		
+		System.out.println("%Calculator> ---------------------------");
 		System.out.println("%Calculator> Calculating interest:");
 		System.out.println("%Calculator> Amount = 		"+sum);
 		System.out.println("%Calculator> Number of days = 	"+days);
@@ -64,9 +67,8 @@ public class InterestCalculator {
 			throw new IllegalArgumentException ("%Calculator> Amount cannot be negative or 0!");
 		
 		double partOfAmount = percentage/100*amount;
-		BigDecimal bigDecimal = new BigDecimal (String.valueOf(partOfAmount));
-		return bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
-		
+		BigDecimal bigDecimal = new BigDecimal (String.valueOf(partOfAmount));		
+		return bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();		
 	}
 	
 }

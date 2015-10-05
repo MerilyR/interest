@@ -3,8 +3,10 @@ package interest.server;
 import interest.exception.ExceptionHandler;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.concurrent.TimeoutException;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -38,10 +40,10 @@ public class ServerChannel {
 			return true;
 			
 		} catch (IOException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			return false;
 		} catch (TimeoutException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			return false;
 		}
 	}
@@ -58,7 +60,7 @@ public class ServerChannel {
 		try {			
 			consumerTag = getChannel().basicConsume(queue, true, consumer);
 		} catch (IOException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 		}
 	}
 
@@ -67,8 +69,32 @@ public class ServerChannel {
 			getChannel().basicCancel(consumerTag);
 			consumerTag = null;
 		} catch (IOException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 		}
 	}
+	
+	String publishQueue = "";
+	
+	public void prepareToPublish(String queue) {
+		
+		publishQueue = queue;
+
+	}
+
+	public void publish(String message) {
+		
+		if (publishQueue.equals(""))
+			ExceptionHandler.log(new IOException("~Channel> Queue to publish to has not been set!"));
+		try {
+			AMQP.BasicProperties properties = new AMQP.BasicProperties();
+			properties = properties.builder().contentType("application/json").build();
+			getChannel().basicPublish("", publishQueue, properties, message.getBytes(Charset.forName("UTF-8")));
+		} catch (IOException e) {
+			ExceptionHandler.log(e);
+		}
+		
+	}
+	
+	
 	
 }

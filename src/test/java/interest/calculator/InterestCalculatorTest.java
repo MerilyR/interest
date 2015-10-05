@@ -51,7 +51,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 		}
 		catch (IllegalArgumentException e) {
 
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}
 		
@@ -60,7 +60,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 		}
 		catch (IllegalArgumentException e) {
 
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}
 		
@@ -88,7 +88,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			getPercentageForDayNr(0);
 		}
 		catch (IllegalArgumentException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}
 		
@@ -133,7 +133,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}		
 		
@@ -142,7 +142,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}
 		
@@ -152,7 +152,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}
 		
@@ -161,7 +161,7 @@ public class InterestCalculatorTest extends InterestCalculator {
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}
 		
@@ -170,35 +170,77 @@ public class InterestCalculatorTest extends InterestCalculator {
 			assert false;
 		}
 		catch (IllegalArgumentException e) {
-			ExceptionHandler.handle(e);
+			ExceptionHandler.log(e);
 			assert true;
 		}
 		
 		//trying with big values
-		
-		System.out.println("--Testing big values:");
+		System.out.println();
+		System.out.println("--Testing big values [stress-testing]:");
 		
 		long startTime = System.currentTimeMillis();
 		
 		System.out.println(getInterest (12345678, 1));
 		
 		long endTime = System.currentTimeMillis();
-		System.out.println("When sum is 8-digit it took " +((endTime - startTime)/1000)+" seconds");
+		System.out.println("When sum is 8-digit it took " +((endTime - startTime)/1000.0)+" seconds");
 		System.out.println();
 				
 		startTime = System.currentTimeMillis();
-		System.out.println(getInterest (123, 12345678));
+		System.out.println(getInterest (123, 1234));
 		
 		endTime = System.currentTimeMillis();
-		System.out.println("When days is 8-digit it took " +((endTime - startTime)/1000)+" seconds");
+		System.out.println("When days is 4-digit it took " +((endTime - startTime)/1000.0)+" seconds");
+		System.out.println();
+			
+		startTime = System.currentTimeMillis();
+		System.out.println(getInterest (12345678, 12345));
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("When days is 5-digit it took " +((endTime - startTime)/1000.0)+" seconds");
+		System.out.println();
+			
+		startTime = System.currentTimeMillis();
+		System.out.println(getInterest (12345678, 123456));
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("When days is 6-digit it took " +((endTime - startTime)/1000.0)+" seconds");
+		System.out.println();
+			
+		startTime = System.currentTimeMillis();
+		System.out.println(getInterest (12345678, 1234567));
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("When days is 7-digit it took " +((endTime - startTime)/1000.0)+" seconds");
 		System.out.println();
 			
 		startTime = System.currentTimeMillis();
 		System.out.println(getInterest (12345678, 12345678));
 		
 		endTime = System.currentTimeMillis();
-		System.out.println("When both are 8-digit it took " +((endTime - startTime)/1000)+" seconds");
+		System.out.println("When days is 8-digit it took " +((endTime - startTime)/1000.0)+" seconds");
 		System.out.println();
+			
+		startTime = System.currentTimeMillis();
+		System.out.println(getInterest (12345678, 12345678));
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("When both are 8-digit it took " +((endTime - startTime)/1000.0)+" seconds");
+		System.out.println();
+		
+		startTime = System.currentTimeMillis();
+		System.out.println(getInterest (123, 123456789));
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("When days is 9-digit it took " +((endTime - startTime)/1000.0)+" seconds");
+		System.out.println();
+		
+//		startTime = System.currentTimeMillis();
+//		System.out.println(getInterest (123, 1234567890));
+//		
+//		endTime = System.currentTimeMillis();
+//		System.out.println("When days is 10-digit it took " +((endTime - startTime)/1000.0)+" seconds");
+//		System.out.println();
 				
 		System.out.println("--- End of Test ---");
 		System.out.println("");

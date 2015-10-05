@@ -22,7 +22,7 @@ public class MessageHandlerTest {
 		System.out.println("--- Testing with correct input values --- ");
 		
 		final String inputMessage = "{\"sum\":123,\"days\":5}";
-		final String outputMessage = "{\"sum\":123.0,\"days\":5,\"interest\":18.45,\"totalSum\":141.45,\"token\":\"test_token\"}";
+		final String outputMessage = "{\"sum\":123,\"days\":5,\"interest\":18.45,\"totalSum\":141.45,\"token\":\"test_token\"}";
 		
 		handler.setPublisher(new Publisher() {
 			public boolean publish(String message) {
@@ -33,12 +33,111 @@ public class MessageHandlerTest {
 				assertTrue(message.equals(outputMessage));
 				return true;
 			}
+
+			public void setQueue(String queue) {
+				
+			}
 		});
 		
 		try {
 			handler.getMessage(inputMessage);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		final String inputMessage2 = "{\"sum\":383,\"days\":26}";
+		final String outputMessage2 = "{\"sum\":383,\"days\":26,\"interest\":283.42,\"totalSum\":666.42,\"token\":\"test_token\"}";
+		
+		handler.setPublisher(new Publisher() {
+			public boolean publish(String message) {
+				
+				System.out.println("Expected> "+outputMessage2);
+				System.out.println("Actual  > "+message);
+				
+				assertTrue(message.equals(outputMessage2));
+				return true;
+			}
+
+			public void setQueue(String queue) {
+				
+			}
+		});
+		
+		try {
+			handler.getMessage(inputMessage2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		final String inputMessage3 = "{\"sum\":824,\"days\":8}";
+		final String outputMessage3 = "{\"sum\":824,\"days\":8,\"interest\":197.76,\"totalSum\":1021.76,\"token\":\"test_token\"}";
+		
+		handler.setPublisher(new Publisher() {
+			public boolean publish(String message) {
+				
+				System.out.println("Expected> "+outputMessage3);
+				System.out.println("Actual  > "+message);
+				
+				assertTrue(message.equals(outputMessage3));
+				return true;
+			}
+
+			public void setQueue(String queue) {
+				
+			}
+		});
+		
+		try {
+			handler.getMessage(inputMessage3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		final String inputMessage4 = "{\"sum\":938,\"days\":235108086}";
+		final String outputMessage4 = "{\"sum\":938,\"days\":235108086,\"interest\":6321899682.56,\"totalSum\":6321900620.56,\"token\":\"test_token\"}";
+		
+		handler.setPublisher(new Publisher() {
+			public boolean publish(String message) {
+				
+				System.out.println("Expected> "+outputMessage4);
+				System.out.println("Actual  > "+message);
+				
+				assertTrue(message.equals(outputMessage4));
+				return true;
+			}
+
+			public void setQueue(String queue) {
+				
+			}
+		});
+		
+		try {
+			handler.getMessage(inputMessage4);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		final String inputMessage5 = "{\"sum\":387,\"days\":11}";
+		final String outputMessage5 = "{\"sum\":387,\"days\":11,\"interest\":119.97,\"totalSum\":506.97,\"token\":\"test_token\"}";
+		
+		handler.setPublisher(new Publisher() {
+			public boolean publish(String message) {
+				
+				System.out.println("Expected> "+outputMessage5);
+				System.out.println("Actual  > "+message);
+				
+				assertTrue(message.equals(outputMessage5));
+				return true;
+			}
+
+			public void setQueue(String queue) {
+				
+			}
+		});
+		
+		try {
+			handler.getMessage(inputMessage5);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -57,6 +156,10 @@ public class MessageHandlerTest {
 			public boolean publish(String message) {
 				assert false;
 				return true;
+			}
+
+			public void setQueue(String queue) {
+				
 			}
 		});
 		
@@ -113,6 +216,10 @@ public class MessageHandlerTest {
 			public boolean publish(String message) {
 				assert false;
 				return true;
+			}
+
+			public void setQueue(String queue) {
+				
 			}
 		});
 		
