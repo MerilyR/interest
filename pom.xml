@@ -2,8 +2,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ee.themerru.jar</groupId>
   <artifactId>interest</artifactId>
+  <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>SolvedInterest</name>
+  <name>ee.themerru.jar.interest</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
   	<dependency>
   		<groupId>com.rabbitmq</groupId>
